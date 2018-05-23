@@ -1,0 +1,93 @@
+﻿@{
+    ViewBag.Title = "Topics";
+}
+
+<div class="row">
+    <table>
+        <tr>
+            <td>
+                <div class="col-md-4" style="width:400px;">
+                    <h2>Topics</h2>
+                    Models: <select onchange="window.open(this.options[this.selectedIndex].value,'_top')">
+                    @foreach (string modelName in ViewBag.modelNames)
+                    {
+                        if (modelName == ViewBag.currentModelName)
+                        {
+                            <option value="@Url.Action("Index", new { modelName = modelName })" selected>@modelName</option>
+                        }
+                        else
+                        {
+                            <option value="@Url.Action("Index", new { modelName = modelName })" >@modelName</option>
+                        }
+                    }
+                    </select>
+                    <p>
+                        <div class="divHScollableModelData">
+                            <table class="tableHeader">
+                                <thead>
+                                    <tr>
+                                        <th class="thId"><button style="border:thin; width:inherit">ID</button></th>
+                                        <th class="thCount" style="width: 90px;"><button style="border:thin; width:inherit">Doc. count</button></th>
+                                        <th class="thLabel">Alias</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td colspan="3">
+                                            <div class="divVScollableModelData">
+                                                <table class="tableModelData">
+                                                    @{
+                                                        int itemIndex = 0;
+                                                        foreach (var topic in Model.topics.Values)
+                                                        {
+                                                            <tr class="d@((itemIndex++)%2)">
+                                                                <td class="tdId">
+                                                                    <a style="color:darkblue" onclick="TabItemClicked(this, '@Url.Action("Terms", new { id = topic.id,  modelName = Model.modelName })'); TabItemClicked2(this, '@Url.Action("DocumentView", new { id = topic.id, modelName = Model.modelName })')" href="#Terms" href2="#DocumentView">
+                                                                        @topic.id
+                                                                    </a>
+                                                                </td>
+                                                                <td class="tdCount" style="width: 92px">@topic.documentCount</td>
+                                                                <td class="tdLabel">
+                                                                    <a style="color:darkblue" onclick="TabItemClicked(this, '@Url.Action("Terms", new { id = topic.id, modelName = Model.modelName })'); TabItemClicked2(this, '@Url.Action("DocumentView", new { id = topic.id, modelName = Model.modelName })')" href="#Terms" href2="#DocumentView">
+                                                                        @topic.label
+                                                                    </a>
+                                                                </td>
+                                                            </tr>
+                                                        }
+                                                    }
+                                                </table>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </p>
+                </div>
+            </td>
+            <td>
+                <div id="Terms" class="col-md-4"  style="position:absolute;top:0px;left:405px;width:400px;">
+                    <h2>Terms</h2>
+                    <p>Select a topic to display iterms stronly associated with it.</p>
+                </div>
+            </td>
+            <td>
+                <div id="DocumentView" class="col-md-4" style ="position:absolute;top:0px;left:820px;width:480px;">
+                    <h2>Documents dealing with topic.</h2>
+                    <p>Select a topic to display documents dealing with this topic..</p>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <p style="text-align:center">
+                    <!--svg class="chart"></!--svg><br /-->
+                    <div class="wordcloudcontainer" >
+                        <svg class="wrdcloud"></svg>
+                    </div>
+                </p>
+            </td>
+        </tr>
+    </table>
+
+</div>

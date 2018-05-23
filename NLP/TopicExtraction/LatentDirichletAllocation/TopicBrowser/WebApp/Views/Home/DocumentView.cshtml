@@ -1,0 +1,43 @@
+﻿@{
+    ViewBag.Title = "DocumentView";
+}
+
+<h2>Documents dealing with topic</h2>
+<p>
+    <div class="divHScollableModelData" style="width:480px;">
+        <table class="tableheader">
+        <thead>
+            <tr>
+                <th class="thUri" style="text-align: center;"><button style="border:thin; width:inherit">URI</button></th>
+                <th class="thProbability" style="text-align: center;"><button style="border:thin; width:inherit">Probability</button></th>
+                <th class="thTitle">Title</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td colspan="3">
+                    <div class="divVScollableModelData">
+                        <table class="tableModelData">
+                            @{
+                                int itemIndex = 0;
+                                foreach (var document in Model)
+                                {
+                                    <tr class="d@((itemIndex++)%2)">
+                                        <td class="tdUri"><a style="color:darkblue" href="@Url.Action("Document", new {id=document.id, modelName=ViewBag.currentModelName})">@document.uri</a></td>
+                                        <td class="tdProbability">@string.Format("{0:P2}", document.probability)</td>
+                                        <td class="tdTitle">@document.title</td>
+                                    </tr>
+                                }
+                            }
+                        </table>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+        </table>
+    </div>
+
+</p>
+
+
+

@@ -1,0 +1,93 @@
+﻿.divHScollableModelData {
+    width:inherit;
+    border-style:solid;
+    overflow: auto;
+}
+
+.divVScollableModelData {
+    height:30em;
+    overflow: auto;
+}
+
+.tableHeader {
+    width: 700px;
+    border-collapse: collapse;
+    margin: 0 auto;
+    overflow: auto;
+}
+
+.tableModelData {
+    width: 700px;
+    border-collapse: collapse;
+}
+
+td, tr.d0 td {
+    background-color: white;
+    color: black;
+    border-right: solid thin white;
+}
+
+tr.d1 td {
+    background-color: #d2f4f8;
+}
+
+.tableHeader th, .tableModelData th {
+    text-align: left;
+}
+
+.thCount, .thId {
+    width: 55px;
+    border-right: solid thin white;
+    text-align: center;
+}
+
+.thId {
+    font-weight:bold;
+}
+
+.tdCount, .tdId {
+    width: 57px;
+    text-align: right;
+    padding-right: 1em;
+}
+
+.thUri {
+    width: 100px;
+    border-right: solid thin white;
+    text-align: center;
+}
+
+.tdUri {
+    width: 102px;
+    padding-right: 1em;
+}
+
+.thProbability {
+    width: 95px;
+    border-right: solid thin white;
+    text-align: center;
+}
+
+.tdProbability {
+    width: 98px;
+    text-align: right;
+    padding-right: 1em;
+}
+
+.thTitle, .thLabel {
+    width: auto;
+    background-color: #f0f0f0;
+    border-right: solid thin white;
+    text-align: left;
+    font-weight: lighter;
+    padding-left: 1em;
+}
+
+.tdTitle, .tdLabel {
+    width: auto;
+    text-align: left;
+    text-wrap: none;
+    text-indent: each-line;
+    padding-left: 1em;
+    color:darkblue;
+}

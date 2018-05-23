@@ -1,0 +1,95 @@
+var ldaVisualize = function (data, topicCloudInfo) {
+
+    var width = 660,
+        height = 350;
+
+    var y = d3.scale.linear()
+        .range([height, 0]);
+
+    var oldchart = d3.select(".chart");
+    oldchart.selectAll("*").remove();
+
+    var chart = d3.select(".chart")
+        .attr("width", width)
+        .attr("height", height);
+
+    var barWidth = width / data.length;
+
+    var bar = chart.selectAll("g")
+      .data(data)
+    .enter().append("g")
+      .attr("transform", function (d, i) { return "translate(" + i * barWidth + ",0)"; }).
+      on("mouseover", function (d, i) {
+          drawTopic(topicCloudInfo[i]);
+      }).
+      on("mouseout", function (d, i) {
+          drawTopic([]);
+      });
+
+    bar.append("rect")
+      .attr("y", function (d) { return y(d); })
+      .attr("height", function (d) { return height - y(d); })
+      .attr("width", barWidth - 1);
+
+    bar.append("text")
+      .attr("x", barWidth / 2)
+      .attr("y", function (d) { return y(d) + 3; })
+      .attr("dy", ".75em")
+      .text(function (d) { return d; });
+
+}
+
+function drawTopic(freqlist) {
+    d3.layout.cloud().size([800, 300])
+            .words(freqlist)
+            .rotate(0)
+            .fontSize(function (d) { return d.size; })
+            .on("end", draw)
+            .start();
+}
+
+function draw(words) {
+    var width = 660,
+        height = 350;
+
+    var color = d3.scale.linear()
+            .domain([0, 1, 2, 3, 4, 5, 6, 10, 15, 20, 100])
+            .range(["#ddd", "#ccc", "#bbb", "#aaa", "#999", "#888", "#777", "#666", "#555", "#444", "#333", "#222"]);
+
+    var oldwrdcloud = d3.select(".wrdcloud");
+    oldwrdcloud.selectAll("*").remove();
+
+    var wrdcloud = d3.select(".wrdcloud")
+      .attr("width", width)
+      .attr("height", height);
+
+    wrdcloud.append("g")
+            // without the transform, words words would get cutoff to the left and top, they would
+            // appear outside of the SVG area
+            .attr("transform", "translate(320,200)")
+            .selectAll("text")
+            .data(words)
+            .enter().append("text")
+            .style("font-size", function (d) { return d.size + "px"; })
+            .style("fill", function (d, i) { return color(i); })
+            .attr("transform", function (d) {
+                return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+            })
+            .text(function (d) { return d.text; });
+}
+
+function TabItemClicked(a, action) {
+
+    var container = $(a).parents('div.row');
+    var resultDiv = $($(a).attr('href'), container);
+
+    $.ajax({
+        type: "GET",
+        url: action,
+        data: {},
+        success: function (response) {
+            resultDiv.html('');
+            resultDiv.html(response);
+        }
+    });
+}

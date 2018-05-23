@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <StartArguments>ConvertVectors InputFile=D:\ModelRepository\Junk\VideoBase64.tsv encoding=Text -LearnLDA samplename=20150814_200.en-us.tsv config=D:\ModelRepository\Jobs\ldaconfig610_85_0.28_0.01_0.006_256_2_1_0.5.json</StartArguments>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <StartArguments>Doc2Text SampleName=minidata.zenith locale=en-us corpus=msn</StartArguments>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <StartArguments>NER samplename=20150304_200.48799.0585589.Part2.tsv config=D:\ModelRepository\Jobs\ldaconfig500_NEE_45_0.6_0.35_0.02_256_2_1_0.5.json</StartArguments>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <StartArguments>NER maxThreads=1 samplename=really.stuck.3.16.tsv config=D:\ModelRepository\Jobs\ldaconfig500_NEE_45_0.6_0.35_0.02_256_2_1_0.5.json</StartArguments>
+  </PropertyGroup>
+</Project>

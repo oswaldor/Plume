@@ -1,0 +1,49 @@
+﻿@{
+    ViewBag.Title = "Terms";
+}
+
+<h2>Terms related to topic @Model.topicId</h2>
+<p>
+    <div class="divHScollableModelData" style="width:400px;">
+        <table class="tableHeader" style="width:500px">
+            <thead>
+                <tr>
+                    <th class="thProbability"><button style="border:thin; width:inherit">Probability</button></th>
+                    <th class="thTitle" style="width: 200px;"><button style="border:thin; width:inherit">Term</button></th>
+                    <th class="thCount" style="width: 100px;"><button style="border:thin; width:inherit">Corpus Freq</button></th>
+                    <th class="thCount" style="width: auto;"><button style="border:thin; width:auto">Doc. Freq</button></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="4">
+                        <div class="divVScollableModelData">
+                            <table class="tableModelData" style="width:500px">
+                                @{
+                                    int itemIndex = 0;
+                                    foreach (var term in Model.listOfTerms)
+                                    {
+                                        <tr class="d@((itemIndex++)%2)">
+                                            <td class="tdProbability">@string.Format("{0:P2}", term.probability)</td>
+                                            <td class="tdTitle" style="width: 202px;">@term.term</td>
+                                            <td class="tdCount" style="width: 102px;">@term.corpusFrequency</td>
+                                            <td class="tdCount" style="width: auto;">@term.documentFrequency</td>
+                                        </tr>
+                                    }
+                                    
+                                }
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script language="javascript">
+        @Html.Raw(Model.jsonVersion)
+        drawTopic(topicCloudInfo[0]);
+    </script>
+</p>
+
+
+

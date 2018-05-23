@@ -1,0 +1,111 @@
+﻿@{
+    ViewBag.Title = "Document Explorer";
+}
+
+<div class="row">
+    <table>
+        <tr>
+            <td colspan="2">
+                <h2 style="color:gray"><b>Title:</b> @Model.title</h2>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div id="Terms" class="col-md-4" style="width:450px;">
+                    <h3>Similar Documents</h3>
+                    <p>
+                        <div class="divHScollableModelData" style="width:450px;">
+                            <table class="tableheader" style="width: 500px; height: 20em;">
+                                <thead>
+                                    <tr>
+                                        <th class="thUri" style="text-align: center;"><button style="border:thin; width:inherit">URI</button></th>
+                                        <th class="thProbability" style="text-align: center;"><button style="border:thin; width:inherit">Similarity</button></th>
+                                        <th class="thTitle">Title</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td colspan="3">
+                                            <div class="divVScollableModelData">
+                                                <table class="tableModelData">
+                                                    @{
+                                                        int itemIndex = 0;
+                                                        foreach (var document in Model.relatedDocuments)
+                                                        {
+                                                            <tr class="d@((itemIndex++)%2)">
+                                                                <td class="tdUri"><a style="color:darkblue" href="@Url.Action("Document", new {id=document.id})">@document.uri</a></td>
+                                                                <td class="tdProbability">@string.Format("{0:N2}", document.probability)</td>
+                                                                <td class="tdTitle">@document.title</td>
+                                                            </tr>
+                                                        }
+                                                    }
+                                                </table>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </p>
+                </div>
+                <br />
+                <div id="Terms" class="col-md-4" style="width: 450px;">
+                    <h3>Salient document terms</h3>
+                    <p>
+                        <div class="divHScollableModelData" style="width:450px; ">
+                            <table class="tableHeader" style="width: 500px; height: 20em;">
+                                <thead>
+                                    <tr>
+                                        <th class="thTitle" style="width: 200px;"><button style="border:thin; width:inherit">Term</button></th>
+                                        <th class="thProbability"><button style="border:thin; width:inherit">TF/DF</button></th>
+                                        <th class="thCount" style="width: auto;"><button style="border:thin; width:auto">Doc. Freq</button></th>
+                                        <th class="thCount" style="width: 100px;"><button style="border:thin; width:inherit">Corpus Freq</button></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td colspan="4">
+                                            <div class="divVScollableModelData">
+                                                <table class="tableModelData" style="width:500px">
+                                                    @{
+                                                        itemIndex = 0;
+                                                        foreach (var term in Model.terms)
+                                                        {
+                                                            <tr class="d@((itemIndex++)%2)">
+                                                                <td class="tdTitle" style="width: 202px;">@term.term</td>
+                                                                <td class="tdProbability">@string.Format("{0:N2}", term.tfidf)</td>
+                                                                <td class="tdCount" style="width: 102px;">@term.frequency</td>
+                                                                <td class="tdCount" style="width: auto;">@term.corpusFrequency</td>
+                                                            </tr>
+                                                        }
+
+                                                    }
+                                                </table>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </p>
+                </div>
+                <!--Html.RenderPartial("DocumentView", Model.relatedDocuments)-->
+
+            </td>
+            <td style="vertical-align:top;" >
+                <h3>Topic signature</h3>
+                <svg class="chart" style="border-left: solid; border-color: black;" /><br />
+                <div class="wordcloudcontainer" >
+                    <svg class="wrdcloud"></svg>
+                </div>
+                <script language="javascript">
+                    @Html.Raw(Model.termsJSON)
+                    @Html.Raw(Model.topicProbabilitiesJSON)
+                    ldaVisualize(data, topicCloudInfo);
+                </script>
+            </td>
+        </tr>
+    </table>
+
+</div>
